@@ -103,14 +103,42 @@ namespace Converter
                             break;
 
                         case "bool":
-                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = {column};");
+                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = Convert.ToBoolean(cells[{column}];");
                             break;
 
                         default:
                             if (type.Contains("["))
                             {
-                                CreateCSUtil.CSTabWriteLine(sw, $"cells[{column}].Replace(';', ',');");
-                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type.Remove(type.IndexOf('['))}[cells[{column}]];");
+                                type = type.Remove(type.IndexOf('['));
+                                CreateCSUtil.CSTabWriteLine(sw, $"string[] array = cells[{column}].Split(';');");
+                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type}[array.Length];");
+                                CreateCSUtil.CSTabWriteLine(sw, $"for(int j = 0; i < array.Length; i++)");
+                                CreateCSUtil.CSTabWriteLine(sw, "{");
+                                CreateCSUtil.AddTabCount();
+                                switch (type)
+                                {
+                                    case "int":
+                                        CreateCSUtil.CSTabWriteLine(sw, $"item.{name}[i] = Convert.ToInt32(array[i]);");
+                                        break;
+
+                                    case "float":
+                                        CreateCSUtil.CSTabWriteLine(sw, $"item.{name}[i] = Convert.ToSingle(array[i]);");
+                                        break;
+
+                                    case "string":
+                                        CreateCSUtil.CSTabWriteLine(sw, $"item.{name}[i] = Convert.ToInt32(array[i]);");
+                                        break;
+
+                                    case "bool":
+                                        CreateCSUtil.CSTabWriteLine(sw, $"item.{name}[i] = Convert.ToBoolean(array[i]);");
+                                        break;
+
+                                    default:
+
+                                        break;
+                                }
+                                CreateCSUtil.RemoveTabCount();
+                                CreateCSUtil.CSTabWriteLine(sw, "}");
                             }
                             break;
                     }

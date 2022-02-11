@@ -27,6 +27,22 @@ namespace Converter
             tabCount += 1;
         }
 
+        public static void CSPartialHeaderWirte(StreamWriter sw, string fileName, string nameSpace = "")
+        {
+            sw.WriteLine("using System;");
+            sw.WriteLine("");
+            if (nameSpace != "")
+            {
+                sw.WriteLine($"namespace {nameSpace}");
+                sw.WriteLine("{");
+                tabCount += 1;
+            }
+
+            CSTabWriteLine(sw, $"public partial class {fileName}");
+            CSTabWriteLine(sw, "{");
+            tabCount += 1;
+        }
+
         public static void CSHeaderWirteForUnity(StreamWriter sw, string fileName, string nameSpace = "")
         {
             sw.WriteLine("using System;");

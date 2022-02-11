@@ -55,10 +55,10 @@ namespace Converter
             ConvertCSV convertCSV = new ConvertCSV(info.GetWorkSheet(), createCSVFilePath, fileName);
             convertCSV.CreateCSV();
 
-            ConvertCS convertCS = new ConvertCS(info.GetWorkSheet(), createCSFilePath, fileName, "Test");
+            ConvertCS convertCS = new ConvertCS(info.GetWorkSheet(), createCSFilePath, fileName, "Eleccom");
             convertCS.CreateCS();
 
-            ConvertCSVLoader convertCSVLoader = new ConvertCSVLoader(info.GetWorkSheet(), createCSVLoaderFilePath, fileName, "Test");
+            ConvertCSVLoader convertCSVLoader = new ConvertCSVLoader(info.GetWorkSheet(), createCSVLoaderFilePath, fileName, "Eleccom");
             convertCSVLoader.CreateCSVLoader();
 
             info.ExcelClose();

@@ -53,7 +53,7 @@ namespace Converter
             FileStream file = File.Create(Path.Combine(filePath, fileName + ".cs"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
-                CreateCSUtil.CSHeaderWirte(sw, fileName, nameSpace);
+                CreateCSUtil.CSPartialHeaderWirte(sw, fileName, nameSpace);
                 Range range = sheet.UsedRange;
                 for (int column = 1; column <= range.Columns.Count; column++)
                 {
