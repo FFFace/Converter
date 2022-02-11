@@ -50,7 +50,7 @@ namespace Converter
                 return;
             }
 
-            FileStream file = File.Create(Path.Combine(filePath + ".cs"));
+            FileStream file = File.Create(Path.Combine(filePath, fileName + ".cs"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
                 CreateCSUtil.CSHeaderWirte(sw, fileName, nameSpace);

@@ -9,7 +9,7 @@ namespace Converter
 {
     class Program
     {
-        private const int argsCount = 2;
+        private const int argsCount = 3;
 
         /// <summary>
         /// args[0] = ProjectName
@@ -26,15 +26,16 @@ namespace Converter
             }
 
             string projectName = args[0];
-            string fileName = args[1];
+            string excelPath = args[1];
+            string fileName = args[2];
 
             string filePath = Directory.GetCurrentDirectory();
             for (int i = 0; i < 6; i++)
                filePath = Path.GetDirectoryName(filePath);
 
-            string createCSVFilePath = Path.Combine(filePath, projectName, "Assets", "Data", fileName);
-            string createCSFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "Data", fileName);
-            string createCSVLoaderFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "DataLoader", fileName);
+            string createCSVFilePath = Path.Combine(filePath, projectName, "Assets", "Data", excelPath);
+            string createCSFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "Data", excelPath);
+            string createCSVLoaderFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "DataLoader", excelPath);
 
             if (!Directory.Exists(createCSFilePath))
                 Directory.CreateDirectory(createCSFilePath);
@@ -43,7 +44,7 @@ namespace Converter
                 Directory.CreateDirectory(createCSVLoaderFilePath);
 
             ExcelInfo info = new ExcelInfo();
-            info.SetFilePath(Path.Combine(filePath, "Excel", fileName + ".xlsx"));
+            info.SetFilePath(Path.Combine(filePath, "Excel", excelPath + ".xlsx"));
             if (!info.ReadFileFromFilePath())
             {
                 info.ExcelClose();

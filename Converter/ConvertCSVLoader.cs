@@ -59,7 +59,7 @@ namespace Converter
                 return;
             }
 
-            FileStream file = File.Create(Path.Combine(filePath + "Loader.cs"));
+            FileStream file = File.Create(Path.Combine(filePath, fileName + "Loader.cs"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
                 sw.WriteLine("using UnityEngine;");
@@ -110,7 +110,7 @@ namespace Converter
                             if (type.Contains("["))
                             {
                                 CreateCSUtil.CSTabWriteLine(sw, $"cells[{column}].Replace(';', ',');");
-                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type}[cells[{column}]");
+                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type.Remove(type.IndexOf('['))}[cells[{column}]]");
                             }
                             break;
                     }

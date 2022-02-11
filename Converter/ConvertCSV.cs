@@ -50,7 +50,7 @@ namespace Converter
             if (!Directory.Exists(csvFilePath))
                 Directory.CreateDirectory(csvFilePath);
 
-            FileStream file = File.Create(Path.Combine(csvFilePath + ".csv"));
+            FileStream file = File.Create(Path.Combine(csvFilePath, fileName +".csv"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
 
