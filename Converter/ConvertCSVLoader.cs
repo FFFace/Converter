@@ -110,7 +110,7 @@ namespace Converter
                             if (type.Contains("["))
                             {
                                 CreateCSUtil.CSTabWriteLine(sw, $"cells[{column}].Replace(';', ',');");
-                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type.Remove(type.IndexOf('['))}[cells[{column}]]");
+                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type.Remove(type.IndexOf('['))}[cells[{column}]];");
                             }
                             break;
                     }
