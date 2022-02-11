@@ -29,12 +29,12 @@ namespace Converter
             string fileName = args[1];
 
             string filePath = Directory.GetCurrentDirectory();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
                filePath = Path.GetDirectoryName(filePath);
 
-            string createCSVFilePath = Path.Combine(filePath, projectName, "Assets", "Data");
-            string createCSFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "Data");
-            string createCSVLoaderFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "DataLoader");
+            string createCSVFilePath = Path.Combine(filePath, projectName, "Assets", "Data", fileName);
+            string createCSFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "Data", fileName);
+            string createCSVLoaderFilePath = Path.Combine(filePath, projectName, "Assets", "Scripts", "DataLoader", fileName);
 
             if (!Directory.Exists(createCSFilePath))
                 Directory.CreateDirectory(createCSFilePath);

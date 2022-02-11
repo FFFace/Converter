@@ -59,27 +59,27 @@ namespace Converter
                 return;
             }
 
-            FileStream file = File.Create(Path.Combine(filePath, fileName + "Loader.cs"));
+            FileStream file = File.Create(Path.Combine(filePath + "Loader.cs"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
                 sw.WriteLine("using UnityEngine;");
                 sw.WriteLine("using System.Collections.Generic;");
                 sw.WriteLine("using System.IO;");
                 CreateCSUtil.CSHeaderWirte(sw, fileName + "Loader", nameSpace);
-                CreateCSUtil.CSTabWrite(sw, $"public Dictionary<int, {fileName}> GetDic()");
-                CreateCSUtil.CSTabWrite(sw, "{");
+                CreateCSUtil.CSTabWriteLine(sw, $"public Dictionary<int, {fileName}> GetDic()");
+                CreateCSUtil.CSTabWriteLine(sw, "{");
                 CreateCSUtil.AddTabCount();
-                CreateCSUtil.CSTabWrite(sw, $"string path = Application.dataPath + \"/data/{fileName}.csv\";");
-                CreateCSUtil.CSTabWrite(sw, $"Dictionary<int, {fileName}> Dic = new Dictionary<int, {fileName}>();");
-                CreateCSUtil.CSTabWrite(sw, "");
-                CreateCSUtil.CSTabWrite(sw, "StreamReader sr = new StreamReader(path);");
-                CreateCSUtil.CSTabWrite(sw, $"string[] lines = sr.ReadToEnd().Split(\'\\n\');");
-                CreateCSUtil.CSTabWrite(sw, $"{fileName} item = new {fileName}();");
-                CreateCSUtil.CSTabWrite(sw, "");
-                CreateCSUtil.CSTabWrite(sw, "for(int i=4; i<lines.Length; i++)");
-                CreateCSUtil.CSTabWrite(sw, "{");
+                CreateCSUtil.CSTabWriteLine(sw, $"string path = Application.dataPath + \"/data/{fileName}.csv\";");
+                CreateCSUtil.CSTabWriteLine(sw, $"Dictionary<int, {fileName}> Dic = new Dictionary<int, {fileName}>();");
+                CreateCSUtil.CSTabWriteLine(sw, "");
+                CreateCSUtil.CSTabWriteLine(sw, "StreamReader sr = new StreamReader(path);");
+                CreateCSUtil.CSTabWriteLine(sw, $"string[] lines = sr.ReadToEnd().Split(\'\\n\');");
+                CreateCSUtil.CSTabWriteLine(sw, $"{fileName} item = new {fileName}();");
+                CreateCSUtil.CSTabWriteLine(sw, "");
+                CreateCSUtil.CSTabWriteLine(sw, "for(int i=4; i<lines.Length; i++)");
+                CreateCSUtil.CSTabWriteLine(sw, "{");
                 CreateCSUtil.AddTabCount();
-                CreateCSUtil.CSTabWrite(sw, "string[] cells = lines[i].Split(\',\');");
+                CreateCSUtil.CSTabWriteLine(sw, "string[] cells = lines[i].Split(\',\');");
 
                 Range range = sheet.UsedRange;
                 string name, type;
@@ -91,30 +91,34 @@ namespace Converter
                     switch (type)
                     {
                         case "int":
-                            CreateCSUtil.CSTabWrite(sw, $"item.{name} = Convert.ToInt32(cells[{column}]);");
+                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = Convert.ToInt32(cells[{column}]);");
                             break;
 
                         case "float":
-                            CreateCSUtil.CSTabWrite(sw, $"item.{name} = Convert.ToSingle(cells[{column}]);");
+                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = Convert.ToSingle(cells[{column}]);");
                             break;
 
                         case "string":
-                            CreateCSUtil.CSTabWrite(sw, $"item.{name} = Convert.ToString(cells[{column}]);");
+                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = Convert.ToString(cells[{column}]);");
                             break;
 
                         case "bool":
-                            CreateCSUtil.CSTabWrite(sw, $"item.{name} = {column};");
+                            CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = {column};");
                             break;
 
                         default:
-
+                            if (type.Contains("["))
+                            {
+                                CreateCSUtil.CSTabWriteLine(sw, $"cells[{column}].Replace(';', ',');");
+                                CreateCSUtil.CSTabWriteLine(sw, $"item.{name} = new {type}[cells[{column}]");
+                            }
                             break;
                     }
                 }
-                CreateCSUtil.CSTabWrite(sw, "Dic.Add(item.index, item);");
+                CreateCSUtil.CSTabWriteLine(sw, "Dic.Add(item.index, item);");
                 CreateCSUtil.RemoveTabCount();
-                CreateCSUtil.CSTabWrite(sw, "}");
-                CreateCSUtil.CSTabWrite(sw, "return Dic;");
+                CreateCSUtil.CSTabWriteLine(sw, "}");
+                CreateCSUtil.CSTabWriteLine(sw, "return Dic;");
                 CreateCSUtil.CSTabClose(sw);
             }
             file.Close();

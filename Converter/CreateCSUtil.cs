@@ -22,8 +22,8 @@ namespace Converter
                 tabCount += 1;
             }
 
-            CSTabWrite(sw, $"public class {fileName}");
-            CSTabWrite(sw, "{");
+            CSTabWriteLine(sw, $"public class {fileName}");
+            CSTabWriteLine(sw, "{");
             tabCount += 1;
         }
 
@@ -38,9 +38,19 @@ namespace Converter
                 tabCount += 1;
             }
 
-            CSTabWrite(sw, $"public class {fileName} : ScriptableObject");
-            CSTabWrite(sw, "{");
+            CSTabWriteLine(sw, $"public class {fileName} : ScriptableObject");
+            CSTabWriteLine(sw, "{");
             tabCount += 1;
+        }
+
+        public static void CSTabWriteLine(StreamWriter sw, string str)
+        {
+            for (int i = 0; i < tabCount; i++)
+            {
+                sw.Write("\t");
+            }
+
+            sw.WriteLine(str);
         }
 
         public static void CSTabWrite(StreamWriter sw, string str)
@@ -50,7 +60,7 @@ namespace Converter
                 sw.Write("\t");
             }
 
-            sw.WriteLine(str);
+            sw.Write(str);
         }
 
         public static void CSTabClose(StreamWriter sw)

@@ -50,7 +50,7 @@ namespace Converter
                 return;
             }
 
-            FileStream file = File.Create(Path.Combine(filePath, fileName + ".cs"));
+            FileStream file = File.Create(Path.Combine(filePath + ".cs"));
             using (StreamWriter sw = new StreamWriter(file, Encoding.UTF8))
             {
                 CreateCSUtil.CSHeaderWirte(sw, fileName, nameSpace);
@@ -61,7 +61,7 @@ namespace Converter
                     string type = Convert.ToString((range.Cells[2, column] as Range).Value2);
                     string explain = Convert.ToString((range.Cells[3, column] as Range).Value2);
 
-                    CreateCSUtil.CSTabWrite(sw, $"public {type} {name}; //{explain}");
+                    CreateCSUtil.CSTabWriteLine(sw, $"public {type} {name}; //{explain}");
                 }
 
                 CreateCSUtil.CSTabClose(sw);
