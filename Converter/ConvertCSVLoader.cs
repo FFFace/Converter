@@ -74,11 +74,11 @@ namespace Converter
                 CreateCSUtil.CSTabWriteLine(sw, "");
                 CreateCSUtil.CSTabWriteLine(sw, "StreamReader sr = new StreamReader(path);");
                 CreateCSUtil.CSTabWriteLine(sw, $"string[] lines = sr.ReadToEnd().Split(\'\\n\');");
-                CreateCSUtil.CSTabWriteLine(sw, $"{fileName} item = new {fileName}();");
                 CreateCSUtil.CSTabWriteLine(sw, "");
                 CreateCSUtil.CSTabWriteLine(sw, "for(int i=4; i<lines.Length; i++)");
                 CreateCSUtil.CSTabWriteLine(sw, "{");
                 CreateCSUtil.AddTabCount();
+                CreateCSUtil.CSTabWriteLine(sw, $"{fileName} item = new {fileName}();");
                 CreateCSUtil.CSTabWriteLine(sw, "string[] cells = lines[i].Split(\',\');");
 
                 Range range = sheet.UsedRange;
